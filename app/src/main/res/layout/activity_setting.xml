@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.trungspc.toiecvocab.activities.SettingActivity"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_back_black_24dp"
+        android:padding="16dp"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/tv_topic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Setting"
+        android:textColor="@color/colorPrimary"
+        android:layout_toRightOf="@id/iv_back"
+        android:padding="16dp"
+        android:textSize="18sp"/>
+
+    <ImageView
+        android:id="@+id/iv_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_done_black_24dp"
+        android:padding="16dp"
+        android:layout_alignParentEnd="true"/>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@id/iv_back"/>
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Daily reminder"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:layout_below="@id/view1"
+        android:padding="8dp"
+        android:paddingStart="16dp"/>
+
+    <Switch
+        android:id="@+id/sw_reminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/tv_time"
+        android:padding="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_enable_timer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:paddingStart="16dp"
+        android:textSize="16sp"
+        android:layout_below="@id/tv_time"
+        android:text="Enable reminder"
+        android:textColor="@color/colorTextBlack"/>
+
+    <TextView
+        android:id="@+id/tv_pick_timer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:paddingStart="16dp"
+        android:layout_below="@+id/tv_enable_timer"
+        android:text="00:00"
+        android:textSize="16sp"
+        android:textColor="@color/colorTextBlack"/>
+    
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@id/tv_pick_timer"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/tv_review"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view2"
+        android:padding="8dp"
+        android:paddingStart="16dp"
+        android:text="Review words"
+        android:textColor="@color/colorPrimary"/>
+
+    <Switch
+        android:id="@+id/sw_review"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/tv_review"
+        android:padding="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_review"
+        android:text="Enable review mode"
+        android:textColor="@color/colorTextBlack"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:paddingStart="16dp"/>
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@id/sw_review"
+        android:background="@android:color/darker_gray"/>
+
+    <ListView
+        android:id="@+id/lv_topics"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/view3"
+        android:divider="@null"
+        android:choiceMode="multipleChoice">
+
+    </ListView>
+
+</RelativeLayout>
