@@ -26,13 +26,13 @@ import static android.content.ContentValues.TAG;
  * Created by Trung's PC on 3/4/2018.
  */
 
-public class ToiecExpandableListViewAdapter extends BaseExpandableListAdapter {
+public class ToeicExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     List<CategoryModel> categoryModelList;
     HashMap<String, List<TopicModel>> topicModelHashMap;
     Context context;
 
-    public ToiecExpandableListViewAdapter(List<CategoryModel> categoryModelList, HashMap<String, List<TopicModel>> topicModelHashMap, Context context) {
+    public ToeicExpandableListViewAdapter(List<CategoryModel> categoryModelList, HashMap<String, List<TopicModel>> topicModelHashMap, Context context) {
         this.categoryModelList = categoryModelList;
         this.topicModelHashMap = topicModelHashMap;
         this.context = context;

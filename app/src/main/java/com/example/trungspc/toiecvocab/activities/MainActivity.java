@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ExpandableListView;
 
 import com.example.trungspc.toiecvocab.R;
-import com.example.trungspc.toiecvocab.adapters.ToiecExpandableListViewAdapter;
+import com.example.trungspc.toiecvocab.adapters.ToeicExpandableListViewAdapter;
 import com.example.trungspc.toiecvocab.databases.DatabaseManager;
 import com.example.trungspc.toiecvocab.databases.models.CategoryModel;
 import com.example.trungspc.toiecvocab.databases.models.TopicModel;
@@ -23,7 +23,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     ExpandableListView elvCategory;
-    ToiecExpandableListViewAdapter adapter;
+    ToeicExpandableListViewAdapter adapter;
     List<TopicModel> topicModelList;
 
     @Override
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         List<CategoryModel> categoryModelList = DatabaseManager.getInstance(this).getCategoryModel(topicModelList);
         HashMap<String, List<TopicModel>> hashMap = DatabaseManager.getInstance(this).getHashMapTopic(topicModelList, categoryModelList);
 
-        adapter = new ToiecExpandableListViewAdapter(categoryModelList, hashMap, this);
+        adapter = new ToeicExpandableListViewAdapter(categoryModelList, hashMap, this);
         elvCategory.setAdapter(adapter);
 
         elvCategory.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
