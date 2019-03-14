@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.trungspc.toiecvocab.activities.ReviewActivity;
 import com.example.trungspc.toiecvocab.activities.SettingActivity;
+import com.example.trungspc.toiecvocab.utils.CommonConst;
 
 import java.util.Map;
 import java.util.Set;
@@ -21,12 +22,8 @@ public class ScreenOnReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         SharedPreferences sharedPreferences = context.getSharedPreferences("Setting", MODE_PRIVATE);
-        Map<String, ?> sharedPreferencesAll = sharedPreferences.getAll();
-//        for (Map.Entry entry : sharedPreferencesAll.entrySet()){
-//            Log.d("Entry key", entry.getKey().toString());
-//            Log.d("Entry value", entry.getValue().toString());
-//        }
-        boolean reviewEnabled = sharedPreferences.getBoolean(SettingActivity.WORD_REVIEWER, false);
+        if (sharedPreferences == null) return;
+        boolean reviewEnabled = sharedPreferences.getBoolean(CommonConst.WORD_REVIEWER, false);
         Log.d("ScreenOnReceiver", "sharedPreferences.WORD_REVIEWER " + reviewEnabled);
         if (reviewEnabled) {
             if (action != null) {

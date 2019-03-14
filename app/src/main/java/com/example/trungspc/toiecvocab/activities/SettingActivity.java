@@ -1,22 +1,20 @@
 package com.example.trungspc.toiecvocab.activities;
 
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -24,32 +22,22 @@ import android.widget.Toast;
 
 import com.example.trungspc.toiecvocab.R;
 import com.example.trungspc.toiecvocab.backgrounds.ReminderService;
-import com.example.trungspc.toiecvocab.backgrounds.ReviewService;
 import com.example.trungspc.toiecvocab.databases.DatabaseManager;
 import com.example.trungspc.toiecvocab.databases.models.TopicModel;
+import com.example.trungspc.toiecvocab.utils.CommonConst;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.example.trungspc.toiecvocab.utils.CommonConst.TIME_REMINDER;
+
 public class SettingActivity extends AppCompatActivity {
     private static final String TAG = "SettingActivity";
-    public final static String TIME_REMINDER = "time_reminder";
-    public final static String WORD_REVIEWER = "word_reviewer";
-
-    private boolean reviewEnabled = false;
-    private boolean remindEnabled = false;
-    private boolean btnSaveClicked = false;
-    private boolean btnUpdateClicked = false;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-    String time;
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_topic)
@@ -76,19 +64,22 @@ public class SettingActivity extends AppCompatActivity {
     View view3;
     @BindView(R.id.lblWordsToCheck)
     TextView lblWordsToCheck;
-    @BindView(R.id.txtNoWordsToCheck)
-    EditText txtNoWordsToCheck;
-    @BindView(R.id.btnSave)
-    Button btnSave;
-    @BindView(R.id.linearLayoutSave)
-    LinearLayout linearLayoutSave;
-    @BindView(R.id.lblWordsToCheckSaved)
-    TextView lblWordsToCheckSaved;
-    @BindView(R.id.btnUpdate)
-    Button btnUpdate;
-    @BindView(R.id.linearLayoutUpdate)
-    LinearLayout linearLayoutUpdate;
+    @BindView(R.id.spinnerWordCount)
+    Spinner spinnerWordCount;
+    @BindView(R.id.linearLayoutChoose)
+    LinearLayout linearLayoutChoose;
+    @BindView(R.id.swAutoPlaySound)
+    TextView swAutoPlaySound;
+    @BindView(R.id.sw_play_sound)
+    Switch swPlaySound;
 
+    private boolean reviewEnabled = false;
+    private boolean remindEnabled = false;
+    private boolean btnSaveClicked = false;
+    private boolean btnUpdateClicked = false;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    String time;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,22 +105,22 @@ public class SettingActivity extends AppCompatActivity {
             tvPickTimer.setVisibility(View.GONE);
         }
 
-        boolean set = sharedPreferences.getBoolean(WORD_REVIEWER, false);
+        boolean set = sharedPreferences.getBoolean(CommonConst.WORD_REVIEWER, false);
         if (set) {
             swReview.setChecked(true);
-            linearLayoutSave.setVisibility(View.VISIBLE);
+            linearLayoutChoose.setVisibility(View.VISIBLE);
         } else {
-            linearLayoutSave.setVisibility(View.GONE);
+            linearLayoutChoose.setVisibility(View.GONE);
+        }
+
+        boolean autoPlaySoundSet = sharedPreferences.getBoolean(CommonConst.PLAY_SOUND_AUTO, false);
+        if (autoPlaySoundSet) {
+            swPlaySound.setChecked(true);
         }
 
         swReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    tvPickTimer.setVisibility(View.VISIBLE);
-//                } else {
-//                    tvPickTimer.setVisibility(View.GONE);
-//                }
                 tvPickTimer.setVisibility(isChecked ? View.VISIBLE : View.GONE);
                 if (buttonView.isShown()) {
                     if (isChecked)
@@ -143,9 +134,58 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    //let user choose number of words to review
-                    linearLayoutSave.setVisibility(View.VISIBLE);
+                    linearLayoutChoose.setVisibility(View.VISIBLE);
+                } else {
+                    linearLayoutChoose.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        swReview.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    linearLayoutChoose.setVisibility(View.VISIBLE);
+                } else {
+                    linearLayoutChoose.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        swPlaySound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    editor.putBoolean(CommonConst.PLAY_SOUND_AUTO, true);
+                } else {
+                    editor.putBoolean(CommonConst.PLAY_SOUND_AUTO, false);
+                }
+            }
+        });
+
+        //set value for spinner
+        final ArrayList<Integer> integers = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            integers.add(i);
+        }
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, integers);
+        spinnerWordCount.setAdapter(adapter);
+        int prevSelection = sharedPreferences.getInt(CommonConst.WORD_REVIEW_COUNT, 0);
+        spinnerWordCount.setSelection(prevSelection);
+
+        //set value to SharedPreferences
+        spinnerWordCount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                editor.putInt(CommonConst.WORD_REVIEW_COUNT, position);
+                spinnerWordCount.setSelection(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(SettingActivity.this, "You must specify the number of words for review", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -170,7 +210,7 @@ public class SettingActivity extends AppCompatActivity {
                 onBackPressed();
                 break;
             case R.id.iv_save:
-                saveSetting();
+                saveSettings();
                 break;
             case R.id.sw_reminder:
                 break;
@@ -183,7 +223,7 @@ public class SettingActivity extends AppCompatActivity {
     }
 
 
-    private void saveSetting() {
+    private void saveSettings() {
         if (swReminder.isChecked()) {
             editor.putString(TIME_REMINDER, time);
             //notif
@@ -205,72 +245,14 @@ public class SettingActivity extends AppCompatActivity {
             //get checked list
             Log.d(TAG, "saveSetting: " + " review enabled");
             //save set to SharedPreference
-            editor.putBoolean(WORD_REVIEWER, true);
+            editor.putBoolean(CommonConst.WORD_REVIEWER, true);
         } else {
-            editor.putBoolean(WORD_REVIEWER, false);
+            editor.putBoolean(CommonConst.WORD_REVIEWER, false);
             Log.d(TAG, "saveSetting: " + " review disabled");
         }
 
         editor.commit();
-        Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "All changes saved!", Toast.LENGTH_SHORT).show();
         this.finish();
-    }
-
-    @OnClick(R.id.btnSave)
-    public void onViewClicked() {
-        //check if a number is entered
-        if (txtNoWordsToCheck.getText() == null || txtNoWordsToCheck.getText().toString().isEmpty()) {
-            AlertDialog alertDialog = new AlertDialog.Builder(SettingActivity.this).create();
-            alertDialog.setTitle("Warning");
-            alertDialog.setMessage("You must set number of words for review!");
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            alertDialog.show();
-        } else {//a number was entered
-            btnSaveClicked = true;
-            //set save screen to invisible
-            linearLayoutSave.setVisibility(View.GONE);
-            //set update screen to visible
-            linearLayoutUpdate.setVisibility(View.VISIBLE);
-
-            //start review service
-            Log.d(TAG, "Starting review service in the background");
-            Intent intent = new Intent(SettingActivity.this, ReviewService.class);
-            intent.setAction(ReviewService.ACTION_REVIEW);
-            startService(intent);
-        }
-
-    }
-
-    @OnClick(R.id.btnUpdate)
-    public void onUpdateClicked() {
-        btnUpdateClicked = true;
-        //set update screen to invisible
-        linearLayoutUpdate.setVisibility(View.GONE);
-        //set save screen to visible
-        linearLayoutSave.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (reviewEnabled && !btnSaveClicked) {
-                AlertDialog alertDialog = new AlertDialog.Builder(SettingActivity.this).create();
-                alertDialog.setTitle("Warning");
-                alertDialog.setMessage("You must set number of words for review!");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
-        } else {
-            super.onBackPressed();
-        }
-
     }
 }
