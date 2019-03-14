@@ -3,6 +3,7 @@
     package="com.example.trungspc.toiecvocab">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver
+            android:name=".backgrounds.ScreenOnReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter android:enabled="true" android:exported="false">
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.SCREEN_ON" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".backgrounds.ReviewService"
+            android:enabled="true"
+            android:exported="false" />
+
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,8 +49,9 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activities.ReviewActivity"
-            android:theme="@style/TransparentBackground"></activity>
+        <activity
+            android:name=".activities.ReviewActivity"
+            android:theme="@style/TransparentBackground" />
     </application>
 
 </manifest>
