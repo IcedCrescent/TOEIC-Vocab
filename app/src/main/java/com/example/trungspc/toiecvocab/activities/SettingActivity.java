@@ -1,9 +1,6 @@
 package com.example.trungspc.toiecvocab.activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,9 +17,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.trungspc.toiecvocab.R;
-import com.example.trungspc.toiecvocab.backgrounds.ReminderService;
+import com.example.trungspc.toiecvocab.backgrounds.AlarmReceiver;
+import com.example.trungspc.toiecvocab.backgrounds.NotificationScheduler;
 import com.example.trungspc.toiecvocab.databases.DatabaseManager;
 import com.example.trungspc.toiecvocab.databases.models.TopicModel;
+import com.example.trungspc.toiecvocab.utils.LocalData;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,7 +35,6 @@ import butterknife.OnClick;
 
 public class SettingActivity extends AppCompatActivity {
     private static final String TAG = "SettingActivity";
-    public final String TIME_REMINDER = "time_reminder";
     public final String TOPIC_REMINDER = "topic_reminder";
 
     @BindView(R.id.iv_back)
@@ -55,6 +53,7 @@ public class SettingActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String time;
+    private LocalData localData;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +63,7 @@ public class SettingActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("Setting", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        localData = new LocalData(this);
 
         List<TopicModel> topicModels = DatabaseManager.getInstance(this).getListTopic();
         List<String> topicName = new ArrayList<>();
@@ -73,10 +73,10 @@ public class SettingActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.item_list_review, topicName);
         lvTopics.setAdapter(arrayAdapter);
 
-        time = sharedPreferences.getString(TIME_REMINDER, null);
-        if (time != null) {
-            tvPickTimer.setText(time);
+        if (localData.getReminderStatus()) {
             swReminder.setChecked(true);
+            String timeString = localData.getHour() + ":" + localData.getMin();
+            tvPickTimer.setText(timeString);
         } else {
             tvPickTimer.setVisibility(View.GONE);
         }
@@ -95,11 +95,6 @@ public class SettingActivity extends AppCompatActivity {
         swReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    tvPickTimer.setVisibility(View.VISIBLE);
-//                } else {
-//                    tvPickTimer.setVisibility(View.GONE);
-//                }
                 tvPickTimer.setVisibility(isChecked ? View.VISIBLE : View.GONE);
                 if (buttonView.isShown()) {
                     if (isChecked)
@@ -154,21 +149,14 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void saveSetting() {
+        localData.setReminderStatus(swReminder.isChecked());
         if (swReminder.isChecked()) {
-            editor.putString(TIME_REMINDER, time);
-            //notif
-            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-            Intent intent = new Intent(this, ReminderService.class);
-            PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time.substring(0, 2)));
-            calendar.set(Calendar.MINUTE, Integer.parseInt(time.substring(3, 5)));
-
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            localData.setHour(Integer.parseInt(time.substring(0, 2)));
+            localData.setMin(Integer.parseInt(time.substring(3, 5)));
+            NotificationScheduler.setReminder(SettingActivity.this, AlarmReceiver.class, localData.getHour(), localData.getMin());
         } else {
-            editor.putString(TIME_REMINDER, null);
+            NotificationScheduler.cancelReminder(SettingActivity.this, AlarmReceiver.class);
+            localData.clearReminder();
         }
 
         if (swReview.isChecked()) {
