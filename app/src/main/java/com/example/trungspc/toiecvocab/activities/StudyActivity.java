@@ -5,6 +5,7 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.LayoutTransition;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -12,6 +13,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Guideline;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +25,7 @@ import com.example.trungspc.toiecvocab.R;
 import com.example.trungspc.toiecvocab.databases.DatabaseManager;
 import com.example.trungspc.toiecvocab.databases.models.TopicModel;
 import com.example.trungspc.toiecvocab.databases.models.WordModel;
+import com.example.trungspc.toiecvocab.utils.CommonConst;
 import com.example.trungspc.toiecvocab.utils.HelperClass;
 import com.squareup.picasso.Picasso;
 
@@ -77,6 +80,8 @@ public class StudyActivity extends AppCompatActivity implements TextToSpeech.OnI
     WordModel wordModel;
     int preID = -1;
     Animator animatorSet;
+    boolean canSpeak = true;
+    SharedPreferences sharedPreferences;
 
     TextToSpeech mTTS = null;
     private final int ACT_CHECK_TTS_DATA = 1000;
@@ -143,6 +148,12 @@ public class StudyActivity extends AppCompatActivity implements TextToSpeech.OnI
         Picasso.get().load(wordModel.getImageUrl()).into(ivWord);
         String level = HelperClass.getLevel(wordModel.getLevel());
         tvLevel.setText(level);
+        sharedPreferences = getSharedPreferences("Setting", MODE_PRIVATE);
+        if(canSpeak && sharedPreferences.getBoolean(CommonConst.PLAY_SOUND_AUTO, false)) {
+            if (mTTS != null) {
+                speak(wordModel.getOrigin().trim(), 1);
+            }
+        }
     }
 
     // Check to see if we have TTS voice data
@@ -219,6 +230,7 @@ public class StudyActivity extends AppCompatActivity implements TextToSpeech.OnI
     @Override
     public void onInit(int i) {
         if (i == TextToSpeech.SUCCESS) {
+            canSpeak = true;
             if (mTTS != null) {
                 int result = mTTS.setLanguage(Locale.US);
                 if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
@@ -228,6 +240,7 @@ public class StudyActivity extends AppCompatActivity implements TextToSpeech.OnI
                 }
             }
         } else {
+            canSpeak = false;
             Toast.makeText(this, "TTS initialization failed", Toast.LENGTH_LONG).show();
         }
     }

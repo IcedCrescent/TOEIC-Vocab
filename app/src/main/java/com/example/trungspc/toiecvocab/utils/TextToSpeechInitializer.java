@@ -9,8 +9,8 @@ import java.util.Locale;
 public class TextToSpeechInitializer{
 
     private Context context;
-    private static TextToSpeech talk;
-    private TextToSpeechIniListener textToSpeechIniListener;
+    private static TextToSpeech textToSpeech;
+    public TextToSpeechIniListener textToSpeechIniListener;
     private Locale locale;
 
     public TextToSpeechInitializer(Context context , Locale locale , TextToSpeechIniListener textToSpeechIniListener) {
@@ -24,14 +24,15 @@ public class TextToSpeechInitializer{
 
 
     private void initialize() {
-        talk = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+        textToSpeech = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
-                    talk.setLanguage(locale); //TODO: Check if locale is available before setting.
-                    textToSpeechIniListener.onSuccess(talk);
+                    textToSpeech.setLanguage(locale); //TODO: Check if locale is available before setting.
+                    textToSpeechIniListener.onSuccess(textToSpeech);
+                    Log.e("TTS","TextToSpeechInitializeSuccess");
                 }else{
-                    textToSpeechIniListener.onFailure(talk);
+                    textToSpeechIniListener.onFailure(textToSpeech);
                     Log.e("TTS","TextToSpeechInitializeError");
                 }
             }

@@ -86,13 +86,12 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //set up text to speech
+        textToSpeechInitializer = new TextToSpeechInitializer(this, Locale.UK, this);
         setContentView(R.layout.activity_review);
         ButterKnife.bind(this);
         sharedPreferences = getSharedPreferences("Setting", MODE_PRIVATE);
         wordReviewCount = sharedPreferences.getInt(CommonConst.WORD_REVIEW_COUNT, 1);
-
-        //set up text to speech
-        textToSpeechInitializer = new TextToSpeechInitializer(this, Locale.UK, this);
         loadData();
     }
 
@@ -112,10 +111,12 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
         String level = HelperClass.getLevel(currentWord.getLevel());
         tvLevel2.setText(level);
         Picasso.get().load(currentWord.getImageUrl()).into(imageView2);
-        if(canSpeak && sharedPreferences.getBoolean(CommonConst.PLAY_SOUND_AUTO, false)) {
-            textToSpeech.speak(tvWord.getText().toString(), QUEUE_ADD, null);
-        }
         wordsReviewedCounter++;
+        if(canSpeak && sharedPreferences.getBoolean(CommonConst.PLAY_SOUND_AUTO, false)) {
+            if (textToSpeech != null){
+                textToSpeech.speak(tvWord.getText().toString(), QUEUE_ADD, null);
+            }
+        }
     }
 
     @Override
@@ -127,7 +128,7 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
         }
     }
 
-    @OnClick({R.id.tvTapToReview, R.id.tvIKnew, R.id.tvNotKnown})
+    @OnClick({R.id.tvTapToReview, R.id.tvIKnew, R.id.tvNotKnown, R.id.iv_sound1, R.id.iv_sound2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvTapToReview:
@@ -149,9 +150,14 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
                     finish();
                 }
                 break;
+            case R.id.iv_sound1:
+            case R.id.iv_sound2:
+                //play audio
+                textToSpeech.speak(tvWord.getText().toString(), QUEUE_ADD, null);
+                break;
         }
     }
-private boolean canSpeak = false;
+    private boolean canSpeak = true;
     @Override
     public void onSuccess(TextToSpeech tts) {
         this.textToSpeech = tts;
