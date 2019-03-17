@@ -124,7 +124,7 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
         }
     }
 
-    @OnClick({R.id.tvTapToReview, R.id.tvIKnew, R.id.tvNotKnown})
+    @OnClick({R.id.tvTapToReview, R.id.tvIKnew, R.id.tvNotKnown, R.id.iv_sound1, R.id.iv_sound2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvTapToReview:
@@ -145,6 +145,11 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
                 } else {
                     finish();
                 }
+                break;
+            case R.id.iv_sound1:
+            case R.id.iv_sound2:
+                //play audio
+                textToSpeech.speak(tvWord.getText().toString(), QUEUE_ADD, null);
                 break;
         }
     }
