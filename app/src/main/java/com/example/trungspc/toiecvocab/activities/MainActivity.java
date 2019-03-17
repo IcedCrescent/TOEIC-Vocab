@@ -17,6 +17,7 @@ import com.example.trungspc.toiecvocab.adapters.ToeicExpandableListViewAdapter;
 import com.example.trungspc.toiecvocab.databases.DatabaseManager;
 import com.example.trungspc.toiecvocab.databases.models.CategoryModel;
 import com.example.trungspc.toiecvocab.databases.models.TopicModel;
+import com.example.trungspc.toiecvocab.utils.CommonConst;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,8 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    public static final String REMINDER_CHANNEL_ID = "1";
     ExpandableListView elvCategory;
     ToeicExpandableListViewAdapter adapter;
     List<TopicModel> topicModelList;
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             CharSequence name = getString(R.string.study_reminder);
             String description = getString(R.string.reminder_channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(REMINDER_CHANNEL_ID, name, importance);
+            NotificationChannel channel = new NotificationChannel(CommonConst.REMINDER_CHANNEL_ID, name, importance);
             channel.setDescription(description);
             channel.enableVibration(true);
             channel.setVibrationPattern(new long[]{100, 1000}); // delay 100ms, vibrate for 1 sec

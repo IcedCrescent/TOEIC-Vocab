@@ -5,9 +5,11 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.LayoutTransition;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Guideline;
 import android.support.v7.app.AppCompatActivity;
@@ -23,14 +25,21 @@ import com.example.trungspc.toiecvocab.R;
 import com.example.trungspc.toiecvocab.databases.DatabaseManager;
 import com.example.trungspc.toiecvocab.databases.models.TopicModel;
 import com.example.trungspc.toiecvocab.databases.models.WordModel;
+import com.example.trungspc.toiecvocab.utils.CommonConst;
 import com.example.trungspc.toiecvocab.utils.HelperClass;
+import com.example.trungspc.toiecvocab.utils.LocalData;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.speech.tts.TextToSpeech.QUEUE_ADD;
 
 public class StudyActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
 
@@ -80,13 +89,14 @@ public class StudyActivity extends AppCompatActivity implements TextToSpeech.OnI
 
     TextToSpeech mTTS = null;
     private final int ACT_CHECK_TTS_DATA = 1000;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study);
         ButterKnife.bind(this);
-
+        sharedPreferences = getSharedPreferences(LocalData.APP_SHARED_PREFS, MODE_PRIVATE);
         loadData();
         setupUI();
         checkTtsData();
@@ -143,6 +153,9 @@ public class StudyActivity extends AppCompatActivity implements TextToSpeech.OnI
         Picasso.get().load(wordModel.getImageUrl()).into(ivWord);
         String level = HelperClass.getLevel(wordModel.getLevel());
         tvLevel.setText(level);
+        if (mTTS != null && sharedPreferences.getBoolean(CommonConst.PLAY_SOUND_AUTO, false)) {
+            speak(wordModel.getOrigin().trim(), 1);
+        }
     }
 
     // Check to see if we have TTS voice data

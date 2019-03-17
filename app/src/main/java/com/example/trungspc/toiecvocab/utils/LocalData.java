@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
 
 public class LocalData {
 
-    private static final String APP_SHARED_PREFS = "Setting";
+    public static final String APP_SHARED_PREFS = "Setting";
 
     private SharedPreferences appSharedPrefs;
     private SharedPreferences.Editor prefsEditor;

@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.example.trungspc.toiecvocab.R;
 import com.example.trungspc.toiecvocab.activities.MainActivity;
+import com.example.trungspc.toiecvocab.utils.CommonConst;
 
 public class ReminderService extends Service {
 
@@ -39,7 +40,7 @@ public class ReminderService extends Service {
                 snoozePendingIntent)
                 .build();
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, MainActivity.REMINDER_CHANNEL_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CommonConst.REMINDER_CHANNEL_ID)
                 .setContentTitle("Time to study")
                 .setContentText("Tap to start:")
                 .setSmallIcon(R.drawable.ic_access_time_black_20dp)

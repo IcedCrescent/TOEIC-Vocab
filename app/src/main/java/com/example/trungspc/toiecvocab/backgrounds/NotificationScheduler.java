@@ -15,6 +15,7 @@ import android.support.v4.app.TaskStackBuilder;
 
 import com.example.trungspc.toiecvocab.R;
 import com.example.trungspc.toiecvocab.activities.MainActivity;
+import com.example.trungspc.toiecvocab.utils.CommonConst;
 
 import java.util.Calendar;
 
@@ -84,7 +85,7 @@ public class NotificationScheduler {
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(DAILY_REMINDER_REQUEST_CODE, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, MainActivity.REMINDER_CHANNEL_ID);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CommonConst.REMINDER_CHANNEL_ID);
 
         Notification notification = builder.setContentTitle(title)
                 .setContentText(content)

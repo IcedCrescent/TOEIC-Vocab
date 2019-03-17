@@ -15,6 +15,7 @@ import com.example.trungspc.toiecvocab.databases.DatabaseManager;
 import com.example.trungspc.toiecvocab.databases.models.WordModel;
 import com.example.trungspc.toiecvocab.utils.CommonConst;
 import com.example.trungspc.toiecvocab.utils.HelperClass;
+import com.example.trungspc.toiecvocab.utils.LocalData;
 import com.example.trungspc.toiecvocab.utils.TextToSpeechInitializer;
 import com.squareup.picasso.Picasso;
 
@@ -85,7 +86,7 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
         ButterKnife.bind(this);
-        sharedPreferences = getSharedPreferences("Setting", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(LocalData.APP_SHARED_PREFS, MODE_PRIVATE);
         wordReviewCount = sharedPreferences.getInt(CommonConst.WORD_REVIEW_COUNT, 1);
 
         //set up text to speech
@@ -109,7 +110,7 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
         String level = HelperClass.getLevel(currentWord.getLevel());
         tvLevel2.setText(level);
         Picasso.get().load(currentWord.getImageUrl()).into(imageView2);
-        if (canSpeak && sharedPreferences.getBoolean(CommonConst.PLAY_SOUND_AUTO, false)) {
+        if (textToSpeech != null && sharedPreferences.getBoolean(CommonConst.PLAY_SOUND_AUTO, false)) {
             textToSpeech.speak(tvWord.getText().toString(), QUEUE_ADD, null);
         }
         wordsReviewedCounter++;
@@ -154,17 +155,13 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
         }
     }
 
-    private boolean canSpeak = false;
-
     @Override
     public void onSuccess(TextToSpeech tts) {
         this.textToSpeech = tts;
-        canSpeak = true;
     }
 
     @Override
     public void onFailure(TextToSpeech tts) {
-        canSpeak = false;
         finish();
     }
 }
