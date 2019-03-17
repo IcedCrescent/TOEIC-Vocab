@@ -2,18 +2,12 @@ package com.example.trungspc.toiecvocab.backgrounds;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.trungspc.toiecvocab.activities.ReviewActivity;
-import com.example.trungspc.toiecvocab.activities.SettingActivity;
 import com.example.trungspc.toiecvocab.utils.CommonConst;
-
-import java.util.Map;
-import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -27,7 +21,7 @@ public class ScreenOnReceiver extends BroadcastReceiver {
         Log.d("ScreenOnReceiver", "sharedPreferences.WORD_REVIEWER " + reviewEnabled);
         if (reviewEnabled) {
             if (action != null) {
-                if (action.equals(Intent.ACTION_SCREEN_ON) || action.equals(Intent.ACTION_USER_PRESENT)){
+                if (action.equals(Intent.ACTION_SCREEN_ON) || action.equals(Intent.ACTION_USER_PRESENT)) {
                     Log.d("ScreenOnReceiver", "onReceive");
                     Intent intent1 = new Intent(context, ReviewActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

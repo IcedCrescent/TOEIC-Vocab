@@ -6,28 +6,24 @@ import android.speech.tts.TextToSpeech;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Guideline;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.trungspc.toiecvocab.R;
 import com.example.trungspc.toiecvocab.databases.DatabaseManager;
-import com.example.trungspc.toiecvocab.databases.models.TopicModel;
 import com.example.trungspc.toiecvocab.databases.models.WordModel;
 import com.example.trungspc.toiecvocab.utils.CommonConst;
 import com.example.trungspc.toiecvocab.utils.HelperClass;
 import com.example.trungspc.toiecvocab.utils.TextToSpeechInitializer;
 import com.squareup.picasso.Picasso;
 
+import java.util.Locale;
+import java.util.Random;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import java.util.Locale;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static android.speech.tts.TextToSpeech.QUEUE_ADD;
 
@@ -39,7 +35,7 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
     Integer wordReviewCount;
     int wordsReviewedCounter;
     private TextToSpeechInitializer textToSpeechInitializer;
-    private TextToSpeech  textToSpeech;
+    private TextToSpeech textToSpeech;
     @BindView(R.id.tvWord)
     TextView tvWord;
     @BindView(R.id.tv_pronounce1)
@@ -83,6 +79,7 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
     @BindView(R.id.constraintLayout4)
     ConstraintLayout constraintLayout4;
     SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +109,7 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
         String level = HelperClass.getLevel(currentWord.getLevel());
         tvLevel2.setText(level);
         Picasso.get().load(currentWord.getImageUrl()).into(imageView2);
-        if(canSpeak && sharedPreferences.getBoolean(CommonConst.PLAY_SOUND_AUTO, false)) {
+        if (canSpeak && sharedPreferences.getBoolean(CommonConst.PLAY_SOUND_AUTO, false)) {
             textToSpeech.speak(tvWord.getText().toString(), QUEUE_ADD, null);
         }
         wordsReviewedCounter++;
@@ -121,7 +118,7 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(textToSpeech != null){
+        if (textToSpeech != null) {
             textToSpeech.stop();
             textToSpeech.shutdown();
         }
@@ -151,7 +148,9 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
                 break;
         }
     }
-private boolean canSpeak = false;
+
+    private boolean canSpeak = false;
+
     @Override
     public void onSuccess(TextToSpeech tts) {
         this.textToSpeech = tts;

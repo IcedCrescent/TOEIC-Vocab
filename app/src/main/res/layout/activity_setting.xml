@@ -171,7 +171,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:text="Number of words to check: " />
 
@@ -205,9 +205,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/swAutoPlaySound"
         android:layout_alignBottom="@+id/swAutoPlaySound"
-        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="356dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="2dp"

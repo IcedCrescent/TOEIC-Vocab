@@ -6,16 +6,16 @@ import android.util.Log;
 
 import java.util.Locale;
 
-public class TextToSpeechInitializer{
+public class TextToSpeechInitializer {
 
     private Context context;
     private static TextToSpeech talk;
     private TextToSpeechIniListener textToSpeechIniListener;
     private Locale locale;
 
-    public TextToSpeechInitializer(Context context , Locale locale , TextToSpeechIniListener textToSpeechIniListener) {
+    public TextToSpeechInitializer(Context context, Locale locale, TextToSpeechIniListener textToSpeechIniListener) {
         this.context = context;
-        if(textToSpeechIniListener != null) {
+        if (textToSpeechIniListener != null) {
             this.textToSpeechIniListener = textToSpeechIniListener;
         }
         this.locale = locale;
@@ -30,18 +30,19 @@ public class TextToSpeechInitializer{
                 if (status == TextToSpeech.SUCCESS) {
                     talk.setLanguage(locale); //TODO: Check if locale is available before setting.
                     textToSpeechIniListener.onSuccess(talk);
-                }else{
+                } else {
                     textToSpeechIniListener.onFailure(talk);
-                    Log.e("TTS","TextToSpeechInitializeError");
+                    Log.e("TTS", "TextToSpeechInitializeError");
                 }
             }
         });
     }
+
     public interface TextToSpeechIniListener {
 
-        public void onSuccess(TextToSpeech tts);
+        void onSuccess(TextToSpeech tts);
 
-        public void onFailure(TextToSpeech tts);
+        void onFailure(TextToSpeech tts);
     }
 }
 
