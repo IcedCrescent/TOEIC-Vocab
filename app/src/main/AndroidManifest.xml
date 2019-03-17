@@ -40,6 +40,15 @@
 
         <!-- Register the Alarm Receiver -->
         <receiver
+            android:name=".backgrounds.AlarmReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Enable show activity after unlock screen -->
+        <receiver
             android:name=".backgrounds.ScreenOnReceiver"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter android:enabled="true" android:exported="false">
@@ -49,6 +58,8 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+
     </application>
 
 </manifest>
