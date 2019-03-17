@@ -1,6 +1,9 @@
 package com.example.trungspc.toiecvocab.activities;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -22,6 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String REMINDER_CHANNEL_ID = "1";
     ExpandableListView elvCategory;
     ToeicExpandableListViewAdapter adapter;
     List<TopicModel> topicModelList;
@@ -36,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Creating an existing notification channel with its original values performs no operation,
+        // so it's safe to call this code when starting an app
+        createNotificationChannel();
 
         elvCategory = findViewById(R.id.elv_category);
 
@@ -81,6 +89,24 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.study_reminder);
+            String description = getString(R.string.reminder_channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(REMINDER_CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            channel.enableVibration(true);
+            channel.setVibrationPattern(new long[]{100, 1000}); // delay 100ms, vibrate for 1 sec
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }

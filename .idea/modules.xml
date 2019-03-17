@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PRM391_Final.iml" filepath="$PROJECT_DIR$/PRM391_Final.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TOIECVocab.iml" filepath="$PROJECT_DIR$/TOIECVocab.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

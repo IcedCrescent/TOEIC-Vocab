@@ -3,7 +3,6 @@ package com.example.trungspc.toiecvocab.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,6 @@ import com.example.trungspc.toiecvocab.databases.models.TopicModel;
 
 import java.util.HashMap;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by Trung's PC on 3/4/2018.

@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">TOEIC Vocab</string>
-    <string name="i_knew">I knew this word</string>
-    <string name="i_didnot_know">I did not know</string>
+    <string name="app_name">TOIEC Vocab</string>
+    <string name="study_reminder">Remind to study</string>
+    <string name="reminder_channel_description">Notify user to study</string>
+    <string name="i_didnot_know">I don\'t know</string>
+    <string name="i_knew">I knew</string>
 </resources>
