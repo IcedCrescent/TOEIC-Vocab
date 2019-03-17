@@ -4,132 +4,213 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.trungspc.toiecvocab.activities.SettingActivity"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    tools:context="com.example.trungspc.toiecvocab.activities.SettingActivity">
 
     <ImageView
         android:id="@+id/iv_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_arrow_back_black_24dp"
+        android:layout_alignParentStart="true"
         android:padding="16dp"
-        android:layout_alignParentStart="true"/>
+        app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
     <TextView
         android:id="@+id/tv_topic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Setting"
-        android:textColor="@color/colorPrimary"
         android:layout_toRightOf="@id/iv_back"
         android:padding="16dp"
-        android:textSize="18sp"/>
+        android:text="Setting"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/iv_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_done_black_24dp"
+        android:layout_alignParentEnd="true"
         android:padding="16dp"
-        android:layout_alignParentEnd="true"/>
+        app:srcCompat="@drawable/ic_done_black_24dp" />
 
     <View
         android:id="@+id/view1"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@android:color/darker_gray"
-        android:layout_below="@id/iv_back"/>
+        android:layout_below="@id/iv_back"
+        android:background="@android:color/darker_gray" />
+
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Daily reminder"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
         android:layout_below="@id/view1"
         android:padding="8dp"
-        android:paddingStart="16dp"/>
+        android:paddingStart="16dp"
+        android:text="Daily reminder"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
 
     <Switch
         android:id="@+id/sw_reminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_below="@id/tv_time"
-        android:padding="8dp"/>
+        android:layout_alignParentEnd="true"
+        android:padding="8dp" />
 
     <TextView
         android:id="@+id/tv_enable_timer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tv_time"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="-1dp"
         android:padding="8dp"
         android:paddingStart="16dp"
-        android:textSize="16sp"
-        android:layout_below="@id/tv_time"
         android:text="Enable reminder"
-        android:textColor="@color/colorTextBlack"/>
+        android:textColor="@color/colorTextBlack"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tv_pick_timer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_enable_timer"
         android:padding="8dp"
         android:paddingStart="16dp"
-        android:layout_below="@+id/tv_enable_timer"
         android:text="00:00"
-        android:textSize="16sp"
-        android:textColor="@color/colorTextBlack"/>
-    
+        android:textColor="@color/colorTextBlack"
+        android:textSize="16sp" />
+
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:layout_below="@id/tv_pick_timer"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
     <TextView
         android:id="@+id/tv_review"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/view2"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="70dp"
         android:padding="8dp"
         android:paddingStart="16dp"
         android:text="Review words"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view2"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="-3dp"
+        android:padding="8dp"
+        android:paddingStart="16dp"
+        android:text="Pronounce words automatically"
+        android:textColor="@color/colorPrimary" />
 
     <Switch
         android:id="@+id/sw_review"
-        android:layout_width="wrap_content"
+        android:layout_width="66dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_below="@id/tv_review"
-        android:padding="8dp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:padding="8dp" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="322dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_review"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="1dp"
+        android:padding="8dp"
+        android:paddingStart="16dp"
         android:text="Enable review mode"
         android:textColor="@color/colorTextBlack"
-        android:textSize="16sp"
-        android:padding="8dp"
-        android:paddingStart="16dp"/>
+        android:textSize="16sp" />
 
     <View
         android:id="@+id/view3"
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:layout_below="@id/sw_review"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
-    <ListView
-        android:id="@+id/lv_topics"
+    <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/view3"
-        android:divider="@null"
-        android:choiceMode="multipleChoice">
+        android:layout_height="5dp"
+        android:layout_below="@id/sw_review"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="-74dp"
+        android:background="@android:color/darker_gray" />
 
-    </ListView>
+    <LinearLayout
+        android:id="@+id/linearLayoutChoose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view3"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/lblWordsToCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1"
+            android:text="Number of words to check: " />
+
+        <Spinner
+            android:id="@+id/spinnerWordCount"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/swAutoPlaySound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/view"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="4dp"
+        android:padding="8dp"
+        android:paddingStart="16dp"
+        android:text="Play sound automatically"
+        android:textColor="@color/colorTextBlack"
+        android:textSize="16sp" />
+
+    <Switch
+        android:id="@+id/sw_play_sound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/swAutoPlaySound"
+        android:layout_alignBottom="@+id/swAutoPlaySound"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="356dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="2dp"
+        android:padding="8dp" />
 
 </RelativeLayout>

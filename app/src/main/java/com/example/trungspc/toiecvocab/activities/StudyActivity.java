@@ -23,6 +23,7 @@ import com.example.trungspc.toiecvocab.R;
 import com.example.trungspc.toiecvocab.databases.DatabaseManager;
 import com.example.trungspc.toiecvocab.databases.models.TopicModel;
 import com.example.trungspc.toiecvocab.databases.models.WordModel;
+import com.example.trungspc.toiecvocab.utils.HelperClass;
 import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
@@ -140,19 +141,8 @@ public class StudyActivity extends AppCompatActivity implements TextToSpeech.OnI
         tvType.setText(wordModel.getType());
         tvExplaination.setText(wordModel.getExplanation());
         Picasso.get().load(wordModel.getImageUrl()).into(ivWord);
-
-        switch (wordModel.getLevel()) {
-            case 0:
-                tvLevel.setText("New word");
-                break;
-            case 1:
-            case 2:
-            case 3:
-                tvLevel.setText("Review");
-            case 4:
-                tvLevel.setText("Master");
-                break;
-        }
+        String level = HelperClass.getLevel(wordModel.getLevel());
+        tvLevel.setText(level);
     }
 
     // Check to see if we have TTS voice data

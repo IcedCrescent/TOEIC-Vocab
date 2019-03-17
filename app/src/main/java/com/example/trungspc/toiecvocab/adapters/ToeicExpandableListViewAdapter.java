@@ -31,6 +31,7 @@ public class ToeicExpandableListViewAdapter extends BaseExpandableListAdapter {
     List<CategoryModel> categoryModelList;
     HashMap<String, List<TopicModel>> topicModelHashMap;
     Context context;
+    int PROGRESS_PARTS = 12;
 
     public ToeicExpandableListViewAdapter(List<CategoryModel> categoryModelList, HashMap<String, List<TopicModel>> topicModelHashMap, Context context) {
         this.categoryModelList = categoryModelList;
@@ -113,9 +114,9 @@ public class ToeicExpandableListViewAdapter extends BaseExpandableListAdapter {
         TextView tvLastTime = convertView.findViewById(R.id.tv_last_time);
         ProgressBar pbTopic = convertView.findViewById(R.id.pb_topic);
 
-        pbTopic.setMax(12);
+        pbTopic.setMax(PROGRESS_PARTS);
         pbTopic.setProgress(DatabaseManager.getInstance(context).getLNumOfMasterWordByTopicId(topicModel.getId()));
-        pbTopic.setSecondaryProgress(12 - DatabaseManager.getInstance(context).getNumOfNewWordByTopicId(topicModel.getId()));
+        pbTopic.setSecondaryProgress(PROGRESS_PARTS - DatabaseManager.getInstance(context).getNumOfNewWordByTopicId(topicModel.getId()));
 
         tvTopic.setText(topicModel.getName());
         if (topicModel.getLastTime() != null) {
