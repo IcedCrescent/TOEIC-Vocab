@@ -45,7 +45,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Word"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
+                android:textSize="25sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -61,18 +61,17 @@
 
             <TextView
                 android:id="@+id/tv_details"
-                android:layout_width="0dp"
+                android:layout_width="379dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="#FFC8C8C8"
-                android:backgroundTint="@color/bluegray"
-                android:textColor="@color/white"
-                android:fontFamily="sans-serif"
+                android:background="@drawable/border_style_green"
+                android:backgroundTint="#4CAF50"
                 android:padding="16dp"
-                android:text="Tap to show detail"
+                android:text="@string/tapToShowDetail"
                 android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_pronounce" />
 
@@ -156,11 +155,11 @@
 
                 <TextView
                     android:id="@+id/tv_didnt_know"
-                    android:layout_marginVertical="7dp"
+                    android:layout_marginVertical="5dp"
                     android:layout_marginHorizontal="16dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:background="@drawable/border_style_red"
                     android:padding="16dp"
                     android:text="I didn't know this word"
