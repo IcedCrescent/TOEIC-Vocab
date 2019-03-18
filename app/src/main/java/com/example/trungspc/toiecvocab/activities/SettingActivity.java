@@ -20,14 +20,11 @@ import android.widget.Toast;
 import com.example.trungspc.toiecvocab.R;
 import com.example.trungspc.toiecvocab.backgrounds.AlarmReceiver;
 import com.example.trungspc.toiecvocab.backgrounds.NotificationScheduler;
-import com.example.trungspc.toiecvocab.databases.DatabaseManager;
-import com.example.trungspc.toiecvocab.databases.models.TopicModel;
 import com.example.trungspc.toiecvocab.utils.CommonConst;
 import com.example.trungspc.toiecvocab.utils.LocalData;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,13 +85,6 @@ public class SettingActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
         localData = new LocalData(this);
-
-        List<TopicModel> topicModels = DatabaseManager.getInstance(this).getListTopic();
-        List<String> topicName = new ArrayList<>();
-        for (TopicModel topicModel : topicModels) {
-            topicName.add(topicModel.getName());
-        }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.item_list_review, topicName);
 
         if (localData.getReminderStatus()) {
             swReminder.setChecked(true);

@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Guideline;
 import android.support.v7.app.AppCompatActivity;
@@ -30,16 +29,11 @@ import com.example.trungspc.toiecvocab.utils.HelperClass;
 import com.example.trungspc.toiecvocab.utils.LocalData;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.speech.tts.TextToSpeech.QUEUE_ADD;
 
 public class StudyActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
 
@@ -150,7 +144,7 @@ public class StudyActivity extends AppCompatActivity implements TextToSpeech.OnI
         tvExampleVn.setText(wordModel.getExampleTranslation());
         tvType.setText(wordModel.getType());
         tvExplaination.setText(wordModel.getExplanation());
-        Picasso.get().load(wordModel.getImageUrl()).into(ivWord);
+        Picasso.get().load(wordModel.getImageUrl()).error(R.drawable.ic_signal_wifi_off_red_24dp).into(ivWord);
         String level = HelperClass.getLevel(wordModel.getLevel());
         tvLevel.setText(level);
         if (mTTS != null && sharedPreferences.getBoolean(CommonConst.PLAY_SOUND_AUTO, false)) {
