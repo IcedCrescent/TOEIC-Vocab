@@ -6,6 +6,7 @@ import android.speech.tts.TextToSpeech;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Guideline;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -95,9 +96,9 @@ public class ReviewActivity extends AppCompatActivity implements TextToSpeechIni
     }
 
     private void loadData() {
-        int min = 1, max = DatabaseManager.getInstance(this).getListTopic().size();
+        int max = DatabaseManager.getInstance(this).getListTopic().size();
         Random ran = new Random();
-        int randomTopicId = ran.nextInt(min) + max;
+        int randomTopicId = ran.nextInt(max) + 1;
         currentWord = DatabaseManager.getInstance(this).getRandomWord(randomTopicId, prevID);
         prevID = currentWord.getId();
         tvExampleEnglish.setText(currentWord.getExample());
