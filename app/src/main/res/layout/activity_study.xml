@@ -155,25 +155,21 @@
 
                 <TextView
                     android:id="@+id/tv_didnt_know"
-                    android:layout_marginVertical="5dp"
-                    android:layout_marginHorizontal="16dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/border_style_red"
+                    android:backgroundTint="@color/red"
                     android:padding="16dp"
                     android:text="I didn't know this word"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:backgroundTint="@color/red"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_example_vn" />
 
                 <TextView
-                    android:layout_marginVertical="7dp"
-                    android:layout_marginHorizontal="16dp"
                     android:id="@+id/tv_knew"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -186,7 +182,7 @@
                     android:backgroundTint="@color/green"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_didnt_know"
+                    app:layout_constraintStart_toEndOf="@+id/guideline"
                     app:layout_constraintTop_toBottomOf="@+id/tv_example_vn" />
             </android.support.constraint.ConstraintLayout>
 
